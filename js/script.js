@@ -6,14 +6,13 @@ var scissors = document.getElementById('scissors-button');
 var output = document.getElementById('output');
 var rounds = document.getElementById('result');
 var newgame = document.getElementById('new-game');
-var resultOfGame = '';
-var playerScore = 0;
-var computerScore = 0;
-var roundsAmount; //Amount of rounds by player
-var gameActive = false;
-
-var dataMoveAttribute = document.getAttribute('paper');
-var classPlayerMove = document.getElementById('player-move');
+var params = {
+    resultOfGame: '';
+    playerScore: 0;
+    computerScore: 0;
+    roundsAmount: 0;
+    gameActive: false;
+};
 
 
 //Main function = playerMove
@@ -39,89 +38,90 @@ var computerMove = function() {
 var playerMove = function(move) {
 
     var computerChoice = computerMove();
-    //Compare Choices
+    Compare Choices
 
-    // if (move === computerChoice){
-    //   resultOfGame = 'Draw';
-    // } else if ((move == 'Paper')&&(computerChoice == 'Stone')){
-    //   resultOfGame = 'Player wins';
-    // } else if ((move == 'Stone')&&(computerChoice == 'Scissors')){
-    //   resultOfGame = 'Player wins';
-    // } else if ((move == 'Scissors')&&(computerChoice == 'Paper')){
-    //   resultOfGame = 'Player wins';
-    // } else {
-    //   resultOfGame = 'Computer wins';
-    // }
+    if (move === computerChoice) {
+        params.resultOfGame = 'Draw';
+    } else if ((move == 'Paper') && (computerChoice == 'Stone')) {
+        params.resultOfGame = 'Player wins';
+    } else if ((move == 'Stone') && (computerChoice == 'Scissors')) {
+        params.resultOfGame = 'Player wins';
+    } else if ((move == 'Scissors') && (computerChoice == 'Paper')) {
+        params.resultOfGame = 'Player wins';
+    } else {
+        params.resultOfGame = 'Computer wins';
+    }
 
-    // if (resultOfGame === 'Player wins') {
-    //   playerScore ++;
-    // } else if (resultOfGame === 'Computer wins') {
-    //   computerScore ++;
-    // }
-    function playerMove()
+    if (params.resultOfGame === 'Player wins') {
+        params.playerScore++;
+    } else if (params.resultOfGame === 'Computer wins') {
+        params.computerScore++;
+    }
 
 
     //Results
 
-    output.innerHTML = resultOfGame + ':' + ' you played ' + move + ' computer played ' + computerChoice + '<br>' + output.innerHTML;
-    result.innerHTML = 'Player: ' + playerScore + ' vs. Computer ' + computerScore + '<br><br>';
+    output.innerHTML = params.resultOfGame + ':' + ' you played ' + move + ' computer played ' + computerChoice + '<br>' + output.innerHTML;
+    result.innerHTML = 'Player: ' + params.playerScore + ' vs. Computer ' + params.computerScore + '<br><br>';
 
-    if (playerScore == roundsAmount) {
+    if (params.playerScore == params.roundsAmount) {
         output.innerHTML = 'You won entire game! Bravo!' + '<br>' + output.innerHTML;
-        gameActive = false;
-    } else if (computerScore == roundsAmount) {
+        params.gameActive = false;
+    } else if (params.computerScore == params.roundsAmount) {
         output.innerHTML = 'I am sorry. Computer won entire game :(' + '<br>' + output.innerHTML;
-        gameActive = false;
+        params.gameActive = false;
     }
 
 };
 
+//  Etap II
 
+var buttonAttribute = event.target.getAttribute('data-move');
+playerMove(buttonAttribute);
 
-paper.addEventListener('click', function() {
-    if (gameActive === true) {
-        playerMove('Paper');
-    } else {
-        output.innerHTML = 'Game over, please press the new game button!' + '<br>' + output.innerHTML;
-    }
-});
-stone.addEventListener('click', function() {
-    if (gameActive === true) {
-        playerMove('Stone');
-    } else {
-        output.innerHTML = 'Game over, please press the new game button!' + '<br>' + output.innerHTML;
-    }
-});
-scissors.addEventListener('click', function() {
-    if (gameActive === true) {
-        playerMove('Scissors');
-    } else {
-        output.innerHTML = 'Game over, please press the      new game button!' + '<br>' + output.innerHTML;
-    }
-});
+var buttons = document.querySelectorAll('player-move');
+
+for (var i = 0; i < buttons.length; i++) {
+    buttons[i].addEventListener('click', playerMove);
+}
+
+// Koniec Etapu 2
+
+// paper.addEventListener('click', function() {
+//     if (gameActive === true) {
+//         playerMove('Paper');
+//     } else {
+//         output.innerHTML = 'Game over, please press the new game button!' + '<br>' + output.innerHTML;
+//     }
+// });
+// stone.addEventListener('click', function() {
+//     if (gameActive === true) {
+//         playerMove('Stone');
+//     } else {
+//         output.innerHTML = 'Game over, please press the new game button!' + '<br>' + output.innerHTML;
+//     }
+// });
+// scissors.addEventListener('click', function() {
+//     if (gameActive === true) {
+//         playerMove('Scissors');
+//     } else {
+//         output.innerHTML = 'Game over, please press the      new game button!' + '<br>' + output.innerHTML;
+//     }
+// });
 
 //ID RESULT
 //choosing amount of rounds
 newgame.addEventListener('click', function() {
-    playerScore = 0;
-    computerScore = 0;
-    result.innerHTML = 'Player: ' + playerScore + ' vs. Computer ' + computerScore + '<br>';
-    roundsAmount = window.prompt('How many rounds you want to play?')
-    gameActive = true;
+    params.playerScore = 0;
+    params.computerScore = 0;
+    result.innerHTML = 'Player: ' + params.playerScore + ' vs. Computer ' + params.computerScore + '<br>';
+    params.roundsAmount = window.prompt('How many rounds you want to play?')
+    params.gameActive = true;
     output.innerHTML = '';
 
 
     //comunicate about amount of rounds to win entire game
-    output.innerHTML = 'To win entire game you need to win ' + roundsAmount + ' rounds. So Come On!' + '<br>' + output.innerHTML;
+    output.innerHTML = 'To win entire game you need to win ' + params.roundsAmount + ' rounds. So Come On!' + '<br>' + output.innerHTML;
 
 
 });
-
-(function() {
-    resultOfGame
-    playerScore
-    computerScore
-    roundsamount
-    var params = { gameResult: params.resultOfGame, playerScoring: playerScore, howManyRounds: roundsamount }
-
-})();
