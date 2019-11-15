@@ -76,14 +76,18 @@ var playerMove = function(move) {
 
 //  Etap II
 
-var buttonAttribute = event.target.getAttribute('data-move');
-playerMove(buttonAttribute);
+var buttonFunction = function(move) {
 
-var buttons = document.querySelectorAll('player-move');
+    var buttonAttribute = event.target.getAttribute('data-move');
 
-for (var i = 0; i < buttons.length; i++) {
-    buttons[i].addEventListener('click', playerMove);
-}
+    playerMove(buttonAttribute);
+
+    var buttons = document.querySelectorAll('player-move');
+
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].addEventListener('click', playerMove);
+    }
+};
 
 // Koniec Etapu 2
 
