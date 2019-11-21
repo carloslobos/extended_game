@@ -12,7 +12,9 @@ var params = {
     computerScore: 0;
     roundsAmount: 0;
     gameActive: false;
+    progress: [];
 };
+
 
 
 //Main function = playerMove
@@ -75,19 +77,20 @@ var playerMove = function(move) {
 };
 
 //  Etap II
+var buttons = document.querySelectorAll('player-move');
 
-var buttonFunction = function(move) {
+for (var i = 0; i < buttons.length; i++) {
+    buttons[i].addEventListener('click', playerMove);
+}
+var buttonFunction = function(event) {
 
     var buttonAttribute = event.target.getAttribute('data-move');
 
+    buttonAttribute();
+
     playerMove(buttonAttribute);
-
-    var buttons = document.querySelectorAll('player-move');
-
-    for (var i = 0; i < buttons.length; i++) {
-        buttons[i].addEventListener('click', playerMove);
-    }
 };
+
 
 // Koniec Etapu 2
 
