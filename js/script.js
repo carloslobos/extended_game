@@ -6,15 +6,15 @@ var scissors = document.getElementById('scissors-button');
 var output = document.getElementById('output');
 var rounds = document.getElementById('result');
 var newgame = document.getElementById('new-game');
+var table = document.getElementsByClassName('table');
 var params = {
-    resultOfGame: '';
-    playerScore: 0;
-    computerScore: 0;
-    roundsAmount: 0;
-    gameActive: false;
-    progress: [];
+    resultOfGame: '',
+    playerScore: 0,
+    computerScore: 0,
+    roundsAmount: 0,
+    gameActive: false,
+    progress: [],
 };
-
 
 
 //Main function = playerMove
@@ -40,7 +40,7 @@ var computerMove = function() {
 var playerMove = function(move) {
 
     var computerChoice = computerMove();
-    Compare Choices
+    //Compare Choices
 
     if (move === computerChoice) {
         params.resultOfGame = 'Draw';
@@ -61,7 +61,6 @@ var playerMove = function(move) {
     }
 
 
-    //Results
 
     output.innerHTML = params.resultOfGame + ':' + ' you played ' + move + ' computer played ' + computerChoice + '<br>' + output.innerHTML;
     result.innerHTML = 'Player: ' + params.playerScore + ' vs. Computer ' + params.computerScore + '<br><br>';
@@ -69,52 +68,86 @@ var playerMove = function(move) {
     if (params.playerScore == params.roundsAmount) {
         output.innerHTML = 'You won entire game! Bravo!' + '<br>' + output.innerHTML;
         params.gameActive = false;
+        showModal();
     } else if (params.computerScore == params.roundsAmount) {
         output.innerHTML = 'I am sorry. Computer won entire game :(' + '<br>' + output.innerHTML;
         params.gameActive = false;
+        showModal();
     }
 
+    //Etap 5
+
+    var gameDetails = {
+        numbOfRound: roundsAmount,
+        moveOfPlayer: move,
+        moveOfComputer: computerMove,
+        score: resultOfGame,
+    }
+
+    params.progress.push(gameDetails);
+
+    var row = '<tr><td>' + gameDetails.numbOfRound + '</tr></td>' + '<tr><td>' + gameDetails.moveOfPlayer + '</tr></td>' + '<tr><td>' + gameDetails.moveOfComputer + '</tr></td>' + '<tr><td>' + gameDetails.resultOfGame + '</tr></td>';
+    table.innerHTML = row;
 };
+//Results
+
+
 
 //  Etap II
-var buttons = document.querySelectorAll('player-move');
 
-for (var i = 0; i < buttons.length; i++) {
-    buttons[i].addEventListener('click', playerMove);
-}
+
 var buttonFunction = function(event) {
 
     var buttonAttribute = event.target.getAttribute('data-move');
-
-    buttonAttribute();
-
-    playerMove(buttonAttribute);
+    console.log(buttonAttribute);
+    if (params.gameActive === true) {
+        playerMove(buttonAttribute);
+    } else {
+        output.innerHTML = 'Game over, please press the new game button!' + '<br>' + output.innerHTML;
+    }
 };
 
+var buttons = document.querySelectorAll('.player-move');
+
+for (var i = 0; i < buttons.length; i++) {
+    buttons[i].addEventListener('click', buttonFunction);
+};
 
 // Koniec Etapu 2
 
-// paper.addEventListener('click', function() {
-//     if (gameActive === true) {
-//         playerMove('Paper');
-//     } else {
-//         output.innerHTML = 'Game over, please press the new game button!' + '<br>' + output.innerHTML;
-//     }
-// });
-// stone.addEventListener('click', function() {
-//     if (gameActive === true) {
-//         playerMove('Stone');
-//     } else {
-//         output.innerHTML = 'Game over, please press the new game button!' + '<br>' + output.innerHTML;
-//     }
-// });
-// scissors.addEventListener('click', function() {
-//     if (gameActive === true) {
-//         playerMove('Scissors');
-//     } else {
-//         output.innerHTML = 'Game over, please press the      new game button!' + '<br>' + output.innerHTML;
-//     }
-// });
+//Etap 4
+
+var showModal = function() {
+    document.querySelector('#modal-overlay').classList.add('show');
+    var allModal = document.querySelectorAll('.modal');
+
+    for (var i = 0; i < allModal.length; i++) {
+        allModal[i].classList.remove('show');
+    }
+
+    document.querySelector("#modal-one").classList.add('show');
+};
+var hideModal = function(event) {
+    event.preventDefault();
+    document.querySelector('#modal-overlay').classList.remove('show');
+};
+
+var closeButtons = document.querySelectorAll('.modal .close');
+
+for (var i = 0; i < closeButtons.length; i++) {
+    closeButtons[i].addEventListener('click', hideModal);
+}
+
+document.querySelector('#modal-overlay').addEventListener('click', hideModal);
+
+var modals = document.querySelectorAll('.modal');
+
+for (var i = 0; i < modals.length; i++) {
+    modals[i].addEventListener('click', function(event) {
+        event.stopPropagation();
+    });
+}
+
 
 //ID RESULT
 //choosing amount of rounds
