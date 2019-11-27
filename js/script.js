@@ -6,7 +6,7 @@ var scissors = document.getElementById('scissors-button');
 var output = document.getElementById('output');
 var rounds = document.getElementById('result');
 var newgame = document.getElementById('new-game');
-var table = document.getElementsByClassName('table');
+var table = document.querySelector('.table');
 var params = {
     resultOfGame: '',
     playerScore: 0,
@@ -78,18 +78,18 @@ var playerMove = function(move) {
     //Etap 5
 
     var gameDetails = {
-        numbOfRound: roundsAmount,
+        numbOfRound: params.roundsAmount,
         moveOfPlayer: move,
-        moveOfComputer: computerMove,
-        score: resultOfGame,
+        moveOfComputer: computerChoice,
+        score: params.resultOfGame,
     }
 
     params.progress.push(gameDetails);
 
-    var row = '<tr><td>' + gameDetails.numbOfRound + '</tr></td>' + '<tr><td>' + gameDetails.moveOfPlayer + '</tr></td>' + '<tr><td>' + gameDetails.moveOfComputer + '</tr></td>' + '<tr><td>' + gameDetails.resultOfGame + '</tr></td>';
+    var row = '<tr><td>Rounds: ' + gameDetails.numbOfRound + '</tr></td>' + '<tr><td>You played: ' + gameDetails.moveOfPlayer + '</tr></td>' + '<tr><td>Computer played: ' + gameDetails.moveOfComputer + '</tr></td>' + '<tr><td>Result of the game: ' + gameDetails.score + '</tr></td>';
     table.innerHTML = row;
+    console.log(row);
 };
-//Results
 
 
 
