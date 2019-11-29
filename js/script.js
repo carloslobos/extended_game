@@ -6,8 +6,8 @@ var scissors = document.getElementById('scissors-button');
 var output = document.getElementById('output');
 var rounds = document.getElementById('result');
 var newgame = document.getElementById('new-game');
-var table = document.querySelector('.table');
-var process = document.querySelector('.process');
+var table = document.querySelector('.table-body');
+var bigResult = document.querySelector('.big-result');
 var params = {
     resultOfGame: '',
     playerScore: 0,
@@ -15,6 +15,7 @@ var params = {
     roundsAmount: 0,
     gameActive: false,
     progress: [],
+    actualRound: 0,
 };
 
 
@@ -40,6 +41,7 @@ var computerMove = function() {
 
 var playerMove = function(move) {
 
+    params.actualRound++;
     var computerChoice = computerMove();
     //Compare Choices
 
@@ -66,25 +68,6 @@ var playerMove = function(move) {
     output.innerHTML = params.resultOfGame + ':' + ' you played ' + move + ' computer played ' + computerChoice + '<br>' + output.innerHTML;
     result.innerHTML = 'Player: ' + params.playerScore + ' vs. Computer ' + params.computerScore + '<br><br>';
 
-
-    //Etap 5
-
-    var gameDetails = {
-        numbOfRound: params.roundsAmount,
-        moveOfPlayer: move,
-        moveOfComputer: computerChoice,
-        score: params.resultOfGame,
-    }
-
-    params.progress.push(gameDetails);
-
-    var row = '<tr><td>Rounds: ' + gameDetails.numbOfRound + '</tr></td>' + '<tr><td>You played: ' + gameDetails.moveOfPlayer + '</tr></td>' + '<tr><td>Computer played: ' + gameDetails.moveOfComputer + '</tr></td>' + '<tr><td>Result of the game: ' + gameDetails.score + '</tr></td>';
-    table.innerHTML = row;
-    console.log(row);
-
-    process.innerHTML = '<br>' + result.innerHTML + '<br>' + params.resultOfGame + ':' + ' you played ' + move + ' computer played ' + computerChoice + output.innerHTML + '<br>';
-
-
     if (params.playerScore == params.roundsAmount) {
         output.innerHTML = 'You won entire game! Bravo!' + '<br>' + output.innerHTML;
         params.gameActive = false;
@@ -94,6 +77,25 @@ var playerMove = function(move) {
         params.gameActive = false;
         showModal();
     }
+
+    //Etap 5
+
+    var gameDetails = {
+        numbOfRound: params.actualRound,
+        moveOfPlayer: move,
+        moveOfComputer: computerChoice,
+        score: params.resultOfGame,
+    }
+
+    params.progress.push(gameDetails);
+
+    bigResult.innerHTML = 'Player: ' + params.playerScore + ' vs. Computer ' + params.computerScore + '<br>';
+
+    var row = '<tr><td>' + gameDetails.numbOfRound + '</td>' + '<td>' + gameDetails.moveOfPlayer + '</td>' + '<td>' + gameDetails.moveOfComputer + '</td>' + '<td>' + gameDetails.score + '</td>' + '<td>' + 'Player ' + +params.playerScore + ' vs. ' + params.computerScore + ' Computer' + '</td></tr>';
+    table.innerHTML = table.innerHTML + row;
+
+
+
 };
 
 
@@ -163,7 +165,8 @@ newgame.addEventListener('click', function() {
     params.roundsAmount = window.prompt('How many rounds you want to play?')
     params.gameActive = true;
     output.innerHTML = '';
-
+    table.innerHTML = '';
+    params.actualRound = 0;
 
     //comunicate about amount of rounds to win entire game
     output.innerHTML = 'To win entire game you need to win ' + params.roundsAmount + ' rounds. So Come On!' + '<br>' + output.innerHTML;
