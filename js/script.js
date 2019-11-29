@@ -7,6 +7,7 @@ var output = document.getElementById('output');
 var rounds = document.getElementById('result');
 var newgame = document.getElementById('new-game');
 var table = document.querySelector('.table');
+var process = document.querySelector('.process');
 var params = {
     resultOfGame: '',
     playerScore: 0,
@@ -65,15 +66,6 @@ var playerMove = function(move) {
     output.innerHTML = params.resultOfGame + ':' + ' you played ' + move + ' computer played ' + computerChoice + '<br>' + output.innerHTML;
     result.innerHTML = 'Player: ' + params.playerScore + ' vs. Computer ' + params.computerScore + '<br><br>';
 
-    if (params.playerScore == params.roundsAmount) {
-        output.innerHTML = 'You won entire game! Bravo!' + '<br>' + output.innerHTML;
-        params.gameActive = false;
-        showModal();
-    } else if (params.computerScore == params.roundsAmount) {
-        output.innerHTML = 'I am sorry. Computer won entire game :(' + '<br>' + output.innerHTML;
-        params.gameActive = false;
-        showModal();
-    }
 
     //Etap 5
 
@@ -89,6 +81,19 @@ var playerMove = function(move) {
     var row = '<tr><td>Rounds: ' + gameDetails.numbOfRound + '</tr></td>' + '<tr><td>You played: ' + gameDetails.moveOfPlayer + '</tr></td>' + '<tr><td>Computer played: ' + gameDetails.moveOfComputer + '</tr></td>' + '<tr><td>Result of the game: ' + gameDetails.score + '</tr></td>';
     table.innerHTML = row;
     console.log(row);
+
+    process.innerHTML = '<br>' + result.innerHTML + '<br>' + params.resultOfGame + ':' + ' you played ' + move + ' computer played ' + computerChoice + output.innerHTML + '<br>';
+
+
+    if (params.playerScore == params.roundsAmount) {
+        output.innerHTML = 'You won entire game! Bravo!' + '<br>' + output.innerHTML;
+        params.gameActive = false;
+        showModal();
+    } else if (params.computerScore == params.roundsAmount) {
+        output.innerHTML = 'I am sorry. Computer won entire game :(' + '<br>' + output.innerHTML;
+        params.gameActive = false;
+        showModal();
+    }
 };
 
 
