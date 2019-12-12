@@ -98,6 +98,14 @@ var playerMove = function(move) {
 
 };
 
+var showEndgameModal = function() {
+    gameActive = false;
+
+    bigResult.innerHTML = 'Player: ' + params.playerScore + ' vs. Computer ' + params.computerScore + '<br>';
+
+
+}
+
 
 
 //  Etap II
