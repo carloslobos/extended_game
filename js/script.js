@@ -63,7 +63,16 @@ var playerMove = function(move) {
         params.computerScore++;
     }
 
+    var gameDetails = {
+        numbOfRound: params.actualRound,
+        moveOfPlayer: move,
+        moveOfComputer: computerChoice,
+        score: params.resultOfGame,
+        playerScore: params.playerScore,
+        computerScore: params.computerScore,
+    }
 
+    params.progress.push(gameDetails);
 
     output.innerHTML = params.resultOfGame + ':' + ' you played ' + move + ' computer played ' + computerChoice + '<br>' + output.innerHTML;
     result.innerHTML = 'Player: ' + params.playerScore + ' vs. Computer ' + params.computerScore + '<br><br>';
@@ -77,25 +86,6 @@ var playerMove = function(move) {
         params.gameActive = false;
         showEndgameModal();
     }
-
-    //Etap 5
-
-    var gameDetails = {
-        numbOfRound: params.actualRound,
-        moveOfPlayer: move,
-        moveOfComputer: computerChoice,
-        score: params.resultOfGame,
-        playerScore: params.playerScore,
-        computerScore: params.computerScore,
-    }
-
-    params.progress.push(gameDetails);
-
-    // bigResult.innerHTML = 'Player: ' + params.playerScore + ' vs. Computer ' + params.computerScore + '<br>';
-
-    // var row = '<tr><td>' + gameDetails.numbOfRound + '</td>' + '<td>' + gameDetails.moveOfPlayer + '</td>' + '<td>' + gameDetails.moveOfComputer + '</td>' + '<td>' + gameDetails.score + '</td>' + '<td>' + 'Player ' + +params.playerScore + ' vs. ' + params.computerScore + ' Computer' + '</td></tr>';
-    // table.innerHTML = table.innerHTML + row;
-
 
 
 };
